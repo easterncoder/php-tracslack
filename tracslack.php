@@ -24,7 +24,15 @@
  * ----
  */
 
+// start of config
+
 define('INCOMING_WEBHOOK_URL', 'put-slack-incoming-webook-url-here');
+define('TRAC_URL', 'put-your-trac-project-url-here');
+
+// end of config
+
+$trac_url = TRAC_URL;
+if(substr($trac_url, '-1') != '/') $trac_url .= '/';
 
 // read email
 $email=file("php://stdin", FILE_IGNORE_NEW_LINES);
@@ -41,6 +49,7 @@ while($x = trim(array_shift($email))) {
 $message = array();
 $in_header = false;
 $in_footer = false;
+
 foreach($email AS $line) {
 	$line = trim($line);
 
@@ -62,7 +71,16 @@ foreach($email AS $line) {
 		break;
 	}
 
-	$message[] = count($message) ? '>'.$line : $line;
+	if(count($message)) {
+		// replace #0000 with link to ticket
+		$line = preg_replace('/#(\d+)/', '<' . $trac_url . 'ticket/$1|#$1>', $line);
+		// replace r0000 with link to revision on default repository
+		$line = preg_replace('/\br(\d+)\b/', '<' . $trac_url . 'browser/?rev=$1|r$1>', $line);
+
+		$line = '>' . $line;
+	}
+
+	$message[] = $line;
 }
 
 if(!$message) {

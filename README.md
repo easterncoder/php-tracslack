@@ -11,7 +11,9 @@ Sends Trac's ticket email notifications to Slack
 ## Configuration
 
 1. Create an Incoming Webhook integration in Slack
-2. Edit `tracslack.php` and set `INCOMING_WEBHOOK_URL` to the Incoming Webhook URL provided by Slack
+2. Edit `tracslack.php` and
+  * set `INCOMING_WEBHOOK_URL` to the Incoming Webhook URL provided by Slack
+  * set `TRAC_URL` to your Trac Project's URL
 
 ## Meta
 
