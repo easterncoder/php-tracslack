@@ -73,9 +73,9 @@ foreach($email AS $line) {
 
 	if(count($message)) {
 		// replace #0000 with link to ticket
-		$line = preg_replace('/#(\d+)/', '<' . $trac_url . 'ticket/$1|#$1>', $line);
+		$line = preg_replace('/#(\d+)/', '<' . $trac_url . 'ticket/$1/|#$1>', $line);
 		// replace r0000 with link to revision on default repository
-		$line = preg_replace('/\br(\d+)\b/', '<' . $trac_url . 'browser/?rev=$1|r$1>', $line);
+		$line = preg_replace('/\br(\d+)\b/', '<' . $trac_url . 'changeset/$1/|r$1>', $line);
 
 		$line = '>' . $line;
 	}
